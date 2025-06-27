@@ -1,15 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/p5.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/addons/p5.sound.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <meta charset="utf-8" />
+<head>
+  <meta charset="utf-8" />
+  <title>The Sweetest JAM</title>
 
-  </head>
-  <body>
-    <main>
-    </main>
-    <script src="sketch.js"></script>
-  </body>
+  <!-- p5.js and sound library -->
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/p5.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.7/lib/addons/p5.sound.min.js"></script>
+
+  <!-- Clean fullscreen styles -->
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #78686e; /* warm mauve-gray fallback */
+    }
+
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+
+<body>
+  <main></main>
+  <script src="sketch.js"></script>
+</body>
 </html>
