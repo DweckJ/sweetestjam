@@ -1,7 +1,7 @@
 let logo, recoloredLogo, customFont;
 let x = 100, y = 100;
 let dx = 3, dy = 2;
-let logoSize = 150;
+let logoSize;
 let currentColor;
 let logoColor;
 let textColor = '#FFFFFF';
@@ -10,6 +10,7 @@ let hearts = [];
 let heartRainActive = false;
 let heartRainStart = 0;
 let heartRainDuration = 3000;
+let canvas;
 
 function preload() {
   logo = loadImage("JAM_BW.png");
@@ -17,18 +18,25 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  let dims = calculateCanvasSize();
+  canvas = createCanvas(dims.w, dims.h);
+  centerCanvas();
+
   imageMode(CORNER);
   textAlign(CENTER, CENTER);
   textFont(customFont || 'Georgia');
+
   currentColor = getWeddingPastel();
   logoColor = currentColor;
   recoloredLogo = recolorDarkPixels(logo, logoColor);
+
   noSmooth();
 }
 
 function draw() {
   background(120, 100, 110); // warm mauve-gray
+
+  logoSize = height * 0.125; // Responsive logo size
 
   if (heartRainActive && millis() - heartRainStart < heartRainDuration) {
     spawnHeartRain();
@@ -45,14 +53,13 @@ function draw() {
 
   let bounced = false;
   let hitCorner = false;
-  
+
   let margin = 10;
   let nearLeft = x <= margin;
   let nearRight = x + logoSize >= width - margin;
   let nearTop = y <= margin;
   let nearBottom = y + logoSize >= height - margin;
 
-  // Use margin-based corner detection for more frequent corner hits
   if ((nearLeft && nearTop) || (nearRight && nearTop) ||
       (nearLeft && nearBottom) || (nearRight && nearBottom)) {
     hitCorner = true;
@@ -60,16 +67,15 @@ function draw() {
 
   if (x <= 0 || x + logoSize >= width) {
     dx = -dx;
-    dy += random(-0.5, 0.5);  // small vertical nudge
+    dy += random(-0.5, 0.5);
     bounced = true;
   }
   if (y <= 0 || y + logoSize >= height) {
     dy = -dy;
-    dx += random(-0.5, 0.5);  // small horizontal nudge
+    dx += random(-0.5, 0.5);
     bounced = true;
   }
 
-  // Keep speed within reasonable bounds so it doesn't speed up too much
   dx = constrain(dx, -5, 5);
   dy = constrain(dy, -5, 5);
 
@@ -86,21 +92,27 @@ function draw() {
 
 function drawTextOverlay() {
   push();
-  textSize(40);
-  fill(0, 100);
-  text("Jared & Maddy", width / 2 + 2, 62);
-  fill(textColor);
-  text("Jared & Maddy", width / 2, 60);
 
-  textSize(60);
+  let scale = height / 800; // Reference scaling
+  textAlign(CENTER, CENTER);
+  textFont(customFont || 'Georgia');
+
+  textSize(40 * scale);
+  fill(0, 100);
+  text("Jared & Maddy", width / 2 + 2, 62 * scale);
+  fill(textColor);
+  text("Jared & Maddy", width / 2, 60 * scale);
+
+  textSize(60 * scale);
   fill(textColor);
   text("The Sweetest JAM", width / 2, height / 2);
 
-  textSize(30);
+  textSize(30 * scale);
   fill(0, 100);
-  text("June 29th, 2025", width / 2 + 2, height - 38);
+  text("June 29th, 2025", width / 2 + 2, height - 38 * scale);
   fill(textColor);
-  text("June 29th, 2025", width / 2, height - 40);
+  text("June 29th, 2025", width / 2, height - 40 * scale);
+
   pop();
 }
 
@@ -181,9 +193,31 @@ function drawHearts() {
   }
 }
 
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+function calculateCanvasSize() {
+  let targetAspect = 16 / 9;
+  let w = windowWidth;
+  let h = w / targetAspect;
+
+  if (h > windowHeight) {
+    h = windowHeight;
+    w = h * targetAspect;
+  }
+
+  return { w, h };
 }
+
+function centerCanvas() {
+  let x = (windowWidth - width) / 2;
+  let y = (windowHeight - height) / 2;
+  canvas.position(x, y);
+}
+
+function windowResized() {
+  let dims = calculateCanvasSize();
+  resizeCanvas(dims.w, dims.h);
+  centerCanvas();
+}
+
 function mousePressed() {
   let fs = fullscreen();
   fullscreen(!fs);
