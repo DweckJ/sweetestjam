@@ -184,3 +184,7 @@ function drawHearts() {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
+function mousePressed() {
+  let fs = fullscreen();
+  fullscreen(!fs);
+}
