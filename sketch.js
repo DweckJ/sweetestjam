@@ -194,17 +194,22 @@ function drawHearts() {
 }
 
 function calculateCanvasSize() {
-  let targetAspect = 16 / 9;
-  let w = windowWidth;
+  let maxW = windowWidth * 0.98;
+  let maxH = windowHeight * 0.98;
+
+  let targetAspect = 4 / 3; // Taller than 16:9
+
+  let w = maxW;
   let h = w / targetAspect;
 
-  if (h > windowHeight) {
-    h = windowHeight;
+  if (h > maxH) {
+    h = maxH;
     w = h * targetAspect;
   }
 
   return { w, h };
 }
+
 
 function centerCanvas() {
   let x = (windowWidth - width) / 2;
