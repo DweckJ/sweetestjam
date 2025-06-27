@@ -36,7 +36,7 @@ function setup() {
 function draw() {
   background(120, 100, 110); // warm mauve-gray
 
-  logoSize = height * 0.125; // Responsive logo size
+logoSize = height * 0.18; // instead of 0.125
 
   if (heartRainActive && millis() - heartRainStart < heartRainDuration) {
     spawnHeartRain();
