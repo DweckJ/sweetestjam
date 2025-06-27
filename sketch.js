@@ -1,6 +1,6 @@
 let logo, recoloredLogo, customFont;
 let x = 100, y = 100;
-let dx = 7, dy = 5;
+let dx = 3, dy = 2;
 let logoSize = 150;
 let currentColor;
 let logoColor;
