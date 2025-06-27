@@ -76,8 +76,8 @@ logoSize = height * 0.18; // instead of 0.125
     bounced = true;
   }
 
-  dx = constrain(dx, -5, 5);
-  dy = constrain(dy, -5, 5);
+  dx = constrain(dx, -3, 3);
+  dy = constrain(dy, -3, 3);
 
   if (bounced) {
     logoColor = getWeddingPastel();
